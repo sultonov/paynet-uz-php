@@ -1,2 +1,1 @@
-# paynet-uz-php
-Интеграция платёжной системы PaynetUz с PHP
+# Интеграция платёжной системы PaynetUz с PHP

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2011 rel. 2 (http://www.altova.com) by Sasha (QS) -->
+<xs:schema xmlns:tns="http://uws.provider.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://uws.provider.com/" version="1.0">
+	<xs:element name="CancelTransactionArguments" type="tns:CancelTransactionArguments"/>
+	<xs:element name="CancelTransactionResult" type="tns:CancelTransactionResult"/>
+	<xs:element name="CheckTransactionArguments" type="tns:CheckTransactionArguments"/>
+	<xs:element name="CheckTransactionResult" type="tns:CheckTransactionResult"/>
+	<xs:element name="GetInformationArguments" type="tns:GetInformationArguments"/>
+	<xs:element name="GetInformationResult" type="tns:GetInformationResult"/>
+	<xs:element name="GetStatementArguments" type="tns:GetStatementArguments"/>
+	<xs:element name="GetStatementResult" type="tns:GetStatementResult"/>
+	<xs:element name="PerformTransactionArguments" type="tns:PerformTransactionArguments"/>
+	<xs:element name="PerformTransactionResult" type="tns:PerformTransactionResult"/>
+    <xs:element name="ChangePasswordArguments" type="tns:ChangePasswordArguments"/>
+	<xs:element name="ChangePasswordResult" type="tns:ChangePasswordResult"/>
+	<xs:complexType name="GenericArguments">
+		<xs:sequence>
+			<xs:element name="password" type="xs:string"/>
+			<xs:element name="username" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GenericResult">
+		<xs:sequence>
+			<xs:element name="errorMsg" type="xs:string"/>
+			<xs:element name="status" type="xs:int"/>
+			<xs:element name="timeStamp" type="xs:dateTime"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GenericParam">
+		<xs:sequence>
+			<xs:element name="paramKey" type="xs:string"/>
+			<xs:element name="paramValue" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CancelTransactionArguments">
+		<xs:complexContent>
+			<xs:extension base="tns:GenericArguments">
+				<xs:sequence>
+					<xs:element name="serviceId" type="xs:long"/>
+					<xs:element name="transactionId" type="xs:long"/>
+                    <xs:element name="transactionTime" type="xs:dateTime"/>
+                    <xs:element name="parameters" type="tns:GenericParam" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="CancelTransactionResult">
+		<xs:complexContent>
+			<xs:extension base="tns:GenericResult">
+				<xs:sequence>
+					<xs:element name="transactionState" type="xs:int"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="CheckTransactionArguments">
+		<xs:complexContent>
+			<xs:extension base="tns:GenericArguments">
+				<xs:sequence>
+					<xs:element name="serviceId" type="xs:long"/>
+					<xs:element name="transactionId" type="xs:long"/>
+					<xs:element name="transactionTime" type="xs:dateTime"/>		
+					<xs:element name="parameters" type="tns:GenericParam" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="CheckTransactionResult">
+		<xs:complexContent>
+			<xs:extension base="tns:GenericResult">
+				<xs:sequence>
+					<xs:element name="providerTrnId" type="xs:long"/>
+					<xs:element name="transactionState" type="xs:int"/>
+					<xs:element name="transactionStateErrorStatus" type="xs:int"/>
+					<xs:element name="transactionStateErrorMsg" type="xs:string"/>					
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="GetInformationArguments">
+		<xs:complexContent>
+			<xs:extension base="tns:GenericArguments">
+				<xs:sequence>
+					<xs:element name="parameters" type="tns:GenericParam" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="serviceId" type="xs:long"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="GetInformationResult">
+		<xs:complexContent>
+			<xs:extension base="tns:GenericResult">
+				<xs:sequence>
+					<xs:element name="parameters" type="tns:GenericParam" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="GetStatementArguments">
+		<xs:complexContent>
+			<xs:extension base="tns:GenericArguments">
+				<xs:sequence>
+					<xs:element name="dateFrom" type="xs:dateTime"/>
+					<xs:element name="dateTo" type="xs:dateTime"/>
+					<xs:element name="serviceId" type="xs:long"/>
+                    <xs:element name="onlyTransactionId" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="parameters" type="tns:GenericParam" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TransactionStatement">
+		<xs:sequence>
+			<xs:element name="amount" type="xs:long" minOccurs="0"/>
+			<xs:element name="providerTrnId" type="xs:long" minOccurs="0"/>
+			<xs:element name="transactionId" type="xs:long"/>
+			<xs:element name="transactionTime" type="xs:dateTime" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GetStatementResult">
+		<xs:complexContent>
+			<xs:extension base="tns:GenericResult">
+				<xs:sequence>
+					<xs:element name="statements" type="tns:TransactionStatement" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PerformTransactionArguments">
+		<xs:complexContent>
+			<xs:extension base="tns:GenericArguments">
+				<xs:sequence>
+					<xs:element name="amount" type="xs:long"/>
+					<xs:element name="parameters" type="tns:GenericParam" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="serviceId" type="xs:long"/>
+					<xs:element name="transactionId" type="xs:long"/>
+					<xs:element name="transactionTime" type="xs:dateTime"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PerformTransactionResult">
+		<xs:complexContent>
+			<xs:extension base="tns:GenericResult">
+				<xs:sequence>
+					<xs:element name="parameters" type="tns:GenericParam" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="providerTrnId" type="xs:long"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+    <xs:complexType name="ChangePasswordResult">
+		<xs:complexContent>
+			<xs:extension base="tns:GenericResult"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ChangePasswordArguments">
+		<xs:complexContent>
+			<xs:extension base="tns:GenericArguments">
+				<xs:sequence>
+					<xs:element name="newPassword" type="xs:string"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>
