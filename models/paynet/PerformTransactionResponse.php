@@ -13,11 +13,6 @@ class PerformTransactionResponse extends GenericResponse
 {
     /**
      * @access public
-     * @var GenericParam[]
-     */
-    public $parameters;
-    /**
-     * @access public
      * @var integer
      */
     public $providerTrnId;

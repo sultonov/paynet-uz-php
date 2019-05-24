@@ -163,7 +163,7 @@ class PaynetService
     }
 
     /**
-     * изменение пароля
+     * изменение пароля (метод необязательный, можно удалить его)
      * @param $args
      * @return GenericResponse
      */
